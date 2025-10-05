@@ -230,7 +230,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🔗 Links
 
-- **Live Demo**: [Your deployed URL]
+- **Live Demo**: (https://password-manager-and-vault.vercel.app/)
 - **GitHub Repository**: https://github.com/kaife0/password-manager-and-vault
 - **Documentation**: See `DEPLOYMENT.md` for detailed deployment guide
 

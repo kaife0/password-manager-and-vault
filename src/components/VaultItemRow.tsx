@@ -47,19 +47,19 @@ export default function VaultItemRow({ item, onEdit, onDelete }: VaultItemRowPro
   }
 
   return (
-    <tr className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-750">
+    <tr className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200">
       <td className="px-2 sm:px-4 py-2 sm:py-3">
-        <div className="font-medium text-gray-900 dark:text-white text-sm sm:text-base">{item.data.title}</div>
-        <div className="sm:hidden text-xs text-gray-600 dark:text-gray-400 mt-1">
+        <div className="font-medium text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-100 text-sm sm:text-base transition-colors duration-200">{item.data.title}</div>
+        <div className="sm:hidden text-xs text-gray-600 dark:text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 mt-1 transition-colors duration-200">
           {item.data.username}
         </div>
         {item.data.url && (
-          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1">
+          <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 mt-1 transition-colors duration-200">
             <a 
               href={item.data.url.startsWith('http') ? item.data.url : `https://${item.data.url}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
+              className="hover:underline text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors duration-200"
             >
               {item.data.url}
             </a>
@@ -68,11 +68,11 @@ export default function VaultItemRow({ item, onEdit, onDelete }: VaultItemRowPro
       </td>
       
       <td className="px-2 sm:px-4 py-2 sm:py-3 hidden sm:table-cell">
-        <div className="text-sm text-gray-900 dark:text-white">{item.data.username}</div>
+        <div className="text-sm text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-100 transition-colors duration-200">{item.data.username}</div>
       </td>
       
       <td className="px-2 sm:px-4 py-2 sm:py-3 hidden md:table-cell">
-        <div className="font-mono text-sm text-gray-900 dark:text-white">
+        <div className="font-mono text-sm text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-100 transition-colors duration-200">
           {'•'.repeat(Math.min(item.data.password.length, 8))}
         </div>
       </td>
