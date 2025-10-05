@@ -130,13 +130,13 @@ export default function PasswordGenerator({ onPasswordGenerated }: PasswordGener
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <h2 className="text-xl font-semibold mb-4">Password Generator</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+      <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-900 dark:text-white">Password Generator</h2>
       
       <div className="space-y-4">
         {/* Length Slider */}
         <div>
-          <label className="block text-sm font-medium mb-2">
+          <label className="block text-sm font-medium mb-2 text-gray-700 dark:text-gray-300">
             Length: {length}
           </label>
           <input
@@ -145,59 +145,59 @@ export default function PasswordGenerator({ onPasswordGenerated }: PasswordGener
             max="64"
             value={length}
             onChange={(e) => setLength(Number(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            className="w-full h-2 bg-gray-200 dark:bg-gray-600 rounded-lg appearance-none cursor-pointer slider"
             aria-label={`Password length: ${length} characters`}
           />
         </div>
 
         {/* Options */}
-        <div className="space-y-2">
-          <label className="flex items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+          <label className="flex items-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
             <input
               type="checkbox"
               checked={includeUppercase}
               onChange={(e) => setIncludeUppercase(e.target.checked)}
-              className="mr-2"
+              className="mr-2 sm:mr-3 h-4 w-4"
             />
-            Uppercase letters (A-Z)
+            Uppercase (A-Z)
           </label>
           
-          <label className="flex items-center">
+          <label className="flex items-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
             <input
               type="checkbox"
               checked={includeLowercase}
               onChange={(e) => setIncludeLowercase(e.target.checked)}
-              className="mr-2"
+              className="mr-2 sm:mr-3 h-4 w-4"
             />
-            Lowercase letters (a-z)
+            Lowercase (a-z)
           </label>
           
-          <label className="flex items-center">
+          <label className="flex items-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
             <input
               type="checkbox"
               checked={includeNumbers}
               onChange={(e) => setIncludeNumbers(e.target.checked)}
-              className="mr-2"
+              className="mr-2 sm:mr-3 h-4 w-4"
             />
             Numbers (0-9)
           </label>
           
-          <label className="flex items-center">
+          <label className="flex items-center text-sm sm:text-base text-gray-700 dark:text-gray-300">
             <input
               type="checkbox"
               checked={includeSymbols}
               onChange={(e) => setIncludeSymbols(e.target.checked)}
-              className="mr-2"
+              className="mr-2 sm:mr-3 h-4 w-4"
             />
             Symbols (!@#$%^&*)
           </label>
           
-          <label className="flex items-center">
+          <label className="flex items-center text-sm sm:text-base text-gray-700 dark:text-gray-300 col-span-1 sm:col-span-2">
             <input
               type="checkbox"
               checked={excludeLookAlikes}
               onChange={(e) => setExcludeLookAlikes(e.target.checked)}
-              className="mr-2"
+              className="mr-2 sm:mr-3 h-4 w-4"
             />
             Exclude look-alikes (l, 1, I, 0, O, o)
           </label>
@@ -206,7 +206,7 @@ export default function PasswordGenerator({ onPasswordGenerated }: PasswordGener
         {/* Generate Button */}
         <button
           onClick={generatePassword}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 sm:py-3 px-4 rounded-lg transition-colors duration-200 text-sm sm:text-base"
         >
           Generate Password
         </button>
@@ -214,17 +214,17 @@ export default function PasswordGenerator({ onPasswordGenerated }: PasswordGener
         {/* Generated Password */}
         {generatedPassword && (
           <div className="mt-4">
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
               <input
                 type="text"
                 value={generatedPassword}
                 readOnly
-                className="flex-1 p-3 border border-gray-300 rounded font-mono text-sm bg-gray-50 dark:bg-gray-700 dark:border-gray-600"
+                className="flex-1 p-2 sm:p-3 border border-gray-300 dark:border-gray-600 rounded-lg font-mono text-sm bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white break-all"
                 aria-label="Generated password"
               />
               <button
                 onClick={copyToClipboard}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded"
+                className="bg-green-600 hover:bg-green-700 text-white px-3 sm:px-4 py-2 sm:py-3 rounded-lg transition-colors duration-200 text-sm sm:text-base whitespace-nowrap"
                 aria-label="Copy password to clipboard"
               >
                 Copy
@@ -232,7 +232,7 @@ export default function PasswordGenerator({ onPasswordGenerated }: PasswordGener
             </div>
             
             {countdown > 0 && (
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-2">
                 Clipboard will be cleared in {countdown}s
               </p>
             )}

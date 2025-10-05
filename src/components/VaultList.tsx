@@ -162,13 +162,13 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
 
   if (!derivedKey || !encryptionSalt || !userPassword) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Your Vault</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3 sm:gap-0">
+          <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Your Vault</h2>
           {onUnlockVault && (
             <button
               onClick={onUnlockVault}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 sm:px-4 text-sm sm:text-base rounded-lg transition-colors duration-200 w-full sm:w-auto"
             >
               Unlock Vault
             </button>
@@ -182,12 +182,12 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold">Your Vault</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-3 sm:gap-0">
+        <h2 className="text-lg sm:text-xl font-semibold text-gray-900 dark:text-white">Your Vault</h2>
         <button
           onClick={openAddModal}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 sm:px-4 text-sm sm:text-base rounded-lg transition-colors duration-200 w-full sm:w-auto"
         >
           Add Item
         </button>
@@ -222,14 +222,14 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
           {items.length === 0 ? 'No items in your vault yet.' : 'No items match your search.'}
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <table className="w-full text-left min-w-full sm:min-w-0">
             <thead>
-              <tr className="border-b dark:border-gray-600">
-                <th className="px-4 py-3">Title & URL</th>
-                <th className="px-4 py-3">Username</th>
-                <th className="px-4 py-3">Password</th>
-                <th className="px-4 py-3">Actions</th>
+              <tr className="border-b border-gray-200 dark:border-gray-600">
+                <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-gray-900 dark:text-white font-medium text-sm sm:text-base">Title & URL</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-gray-900 dark:text-white font-medium text-sm sm:text-base hidden sm:table-cell">Username</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-gray-900 dark:text-white font-medium text-sm sm:text-base hidden md:table-cell">Password</th>
+                <th className="px-2 sm:px-4 py-2 sm:py-3 text-left text-gray-900 dark:text-white font-medium text-sm sm:text-base">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -248,15 +248,15 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
-            <h3 className="text-lg font-semibold mb-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 sm:p-6 w-full max-w-sm sm:max-w-md border border-gray-200 dark:border-gray-600 max-h-[90vh] overflow-y-auto">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
               {editingItem ? 'Edit Item' : 'Add New Item'}
             </h3>
 
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Title</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Title</label>
                 <input
                   type="text"
                   value={formData.title}
@@ -267,7 +267,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Username</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Username</label>
                 <input
                   type="text"
                   value={formData.username}
@@ -278,7 +278,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
               </div>
 
               <div>
-                <label htmlFor="password-input" className="block text-sm font-medium mb-1">Password</label>
+                <label htmlFor="password-input" className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Password</label>
                 <input
                   id="password-input"
                   type="text"
@@ -296,7 +296,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">URL</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">URL</label>
                 <input
                   type="text"
                   value={formData.url}
@@ -307,7 +307,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Notes</label>
+                <label className="block text-sm font-medium mb-1 text-gray-700 dark:text-gray-300">Notes</label>
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
@@ -318,17 +318,17 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
               </div>
             </div>
 
-            <div className="flex space-x-4 mt-6">
+            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 mt-6">
               <button
                 onClick={handleSave}
                 disabled={loading || !formData.title}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded disabled:opacity-50"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg disabled:opacity-50 transition-colors duration-200"
               >
                 {loading ? 'Saving...' : 'Save'}
               </button>
               <button
                 onClick={() => setShowModal(false)}
-                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 py-2 px-4 rounded"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-800 dark:text-white py-2 px-4 rounded-lg transition-colors duration-200"
               >
                 Cancel
               </button>

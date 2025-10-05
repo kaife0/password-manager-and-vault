@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
+import { Sun, Moon } from 'lucide-react'
+import { useTheme } from '../contexts/ThemeContext'
 
 interface AuthFormProps {
   mode: 'login' | 'signup'
@@ -12,6 +14,7 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const { theme, toggleTheme } = useTheme()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,32 +52,41 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white flex items-center justify-center relative">
+      {/* Theme Toggle Button */}
+      <button
+        onClick={toggleTheme}
+        className="absolute top-4 right-4 p-2 rounded-lg bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 transition-colors duration-200"
+        aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+      >
+        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+      </button>
+
+      <div className="max-w-sm sm:max-w-md w-full space-y-6 sm:space-y-8 px-4">
         <div className="text-center">
           {/* Logo */}
           <div className="flex justify-center mb-4">
             <Image
               src="/logo.png"
               alt="Password Manager Logo"
-              width={120}
-              height={120}
-              className="mx-auto"
+              width={80}
+              height={80}
+              className="sm:w-[120px] sm:h-[120px] mx-auto rounded-lg"
               priority
             />
           </div>
           
           {/* App Name */}
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6">
             Password Manager
           </h1>
           
           {/* Heading */}
-          <h2 className="text-center text-3xl font-extrabold">
+          <h2 className="text-center text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900 dark:text-white">
             {mode === 'login' ? 'Sign in to your account' : 'Create your account'}
           </h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
               {error}
@@ -137,7 +149,7 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
             <button
               type="submit"
               disabled={loading}
-              className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
+              className={`group relative w-full flex justify-center py-2 sm:py-3 px-4 border border-transparent text-sm sm:text-base font-medium rounded-lg text-white transition-colors duration-200 ${
                 mode === 'login' 
                   ? 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500' 
                   : 'bg-green-600 hover:bg-green-700 focus:ring-green-500'
@@ -153,7 +165,7 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
           <div className="text-center">
             <a 
               href={mode === 'login' ? '/auth/signup' : '/auth/login'} 
-              className="text-blue-600 hover:text-blue-500"
+              className="text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm sm:text-base transition-colors duration-200"
             >
               {mode === 'login' 
                 ? "Don't have an account? Sign up" 
