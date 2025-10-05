@@ -37,7 +37,7 @@ A minimal, fast, privacy-first password manager built with **Next.js 15**, **Typ
 
 1. **Clone and install dependencies:**
    ```bash
-   git clone <your-repo>
+   git clone https://github.com/kaife0/password-manager-and-vault
    cd password-manager
    npm install
    ```
@@ -231,8 +231,7 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 🔗 Links
 
 - **Live Demo**: [Your deployed URL]
-- **GitHub Repository**: [Your repo URL]
-- **Issues**: [Your repo issues URL]
+- **GitHub Repository**: https://github.com/kaife0/password-manager-and-vault
 - **Documentation**: See `DEPLOYMENT.md` for detailed deployment guide
 
 ---
