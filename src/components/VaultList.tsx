@@ -281,10 +281,17 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword, on
                 <label htmlFor="password-input" className="block text-sm font-medium mb-1">Password</label>
                 <input
                   id="password-input"
-                  type="password"
+                  type="text"
+                  autoComplete="new-password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  onPaste={(e) => {
+                    e.preventDefault()
+                    const pastedText = e.clipboardData.getData('text')
+                    setFormData({ ...formData, password: pastedText })
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500 font-mono"
+                  placeholder="Enter or paste password"
                 />
               </div>
 
