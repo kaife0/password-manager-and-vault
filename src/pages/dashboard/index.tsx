@@ -10,6 +10,7 @@ export default function Dashboard() {
   const { isAuthenticated, encryptionSalt, derivedKey, logout, restoreSession, loading } = useAuth()
   const [userPassword, setUserPassword] = useState('')
   const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [vaultUnlocked, setVaultUnlocked] = useState(false)
 
   useEffect(() => {
     // If user is not authenticated and not loading, redirect to login
@@ -18,9 +19,9 @@ export default function Dashboard() {
       return
     }
 
-    // If we have encryption salt but no derived key, show password modal
-    if (encryptionSalt && !derivedKey && !loading) {
-      setShowPasswordModal(true)
+    // Check if vault is already unlocked
+    if (encryptionSalt && derivedKey) {
+      setVaultUnlocked(true)
     }
   }, [isAuthenticated, encryptionSalt, derivedKey, loading, router])
 
@@ -30,9 +31,14 @@ export default function Dashboard() {
     if (result.success) {
       setUserPassword(password)
       setShowPasswordModal(false)
+      setVaultUnlocked(true)
     } else {
       alert(result.error || 'Invalid password')
     }
+  }
+
+  const handleUnlockVault = () => {
+    setShowPasswordModal(true)
   }
 
   const handleLogout = async () => {
@@ -88,9 +94,10 @@ export default function Dashboard() {
           
           {/* Vault Section */}
           <VaultList 
-            derivedKey={derivedKey} 
+            derivedKey={vaultUnlocked ? derivedKey : null} 
             encryptionSalt={encryptionSalt}
             userPassword={userPassword}
+            onUnlockVault={handleUnlockVault}
           />
         </div>
       </div>
@@ -121,7 +128,7 @@ export default function Dashboard() {
                   name="password"
                   type="password"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Enter your password"
                 />
               </div>

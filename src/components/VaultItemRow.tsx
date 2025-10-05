@@ -49,14 +49,14 @@ export default function VaultItemRow({ item, onEdit, onDelete }: VaultItemRowPro
   return (
     <tr className="border-b dark:border-gray-700">
       <td className="px-4 py-3">
-        <div className="font-medium">{item.data.title}</div>
+        <div className="font-medium text-gray-900 dark:text-white">{item.data.title}</div>
         {item.data.url && (
           <div className="text-sm text-gray-600 dark:text-gray-400">
             <a 
               href={item.data.url.startsWith('http') ? item.data.url : `https://${item.data.url}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:underline"
+              className="hover:underline text-blue-600 dark:text-blue-400"
             >
               {item.data.url}
             </a>
@@ -65,11 +65,11 @@ export default function VaultItemRow({ item, onEdit, onDelete }: VaultItemRowPro
       </td>
       
       <td className="px-4 py-3">
-        <div className="text-sm">{item.data.username}</div>
+        <div className="text-sm text-gray-900 dark:text-white">{item.data.username}</div>
       </td>
       
       <td className="px-4 py-3">
-        <div className="font-mono text-sm">
+        <div className="font-mono text-sm text-gray-900 dark:text-white">
           {'•'.repeat(Math.min(item.data.password.length, 12))}
         </div>
       </td>

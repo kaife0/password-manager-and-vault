@@ -7,6 +7,7 @@ interface VaultListProps {
   derivedKey: CryptoKey | null
   encryptionSalt: string | null
   userPassword?: string
+  onUnlockVault?: () => void
 }
 
 interface VaultItemData {
@@ -25,7 +26,7 @@ interface EncryptedVaultItem {
   updatedAt: string
 }
 
-export default function VaultList({ derivedKey, encryptionSalt, userPassword }: VaultListProps) {
+export default function VaultList({ derivedKey, encryptionSalt, userPassword, onUnlockVault }: VaultListProps) {
   const [items, setItems] = useState<DecryptedVaultItem[]>([])
   const [filteredItems, setFilteredItems] = useState<DecryptedVaultItem[]>([])
   const [searchTerm, setSearchTerm] = useState('')
@@ -162,8 +163,20 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
   if (!derivedKey || !encryptionSalt || !userPassword) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold mb-4">Your Vault</h2>
-        <p className="text-gray-600 dark:text-gray-300">Please log in to access your vault.</p>
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-xl font-semibold">Your Vault</h2>
+          {onUnlockVault && (
+            <button
+              onClick={onUnlockVault}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+            >
+              Unlock Vault
+            </button>
+          )}
+        </div>
+        <p className="text-gray-600 dark:text-gray-300">
+          {!onUnlockVault ? 'Please log in to access your vault.' : 'Click "Unlock Vault" to access your encrypted passwords.'}
+        </p>
       </div>
     )
   }
@@ -197,7 +210,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
           placeholder="Search items..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
 
@@ -248,7 +261,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
                   type="text"
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="e.g., Gmail"
                 />
               </div>
@@ -259,7 +272,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
                   type="text"
                   value={formData.username}
                   onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="username or email"
                 />
               </div>
@@ -271,7 +284,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
                   type="password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
 
@@ -281,7 +294,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
                   type="text"
                   value={formData.url}
                   onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   placeholder="https://example.com"
                 />
               </div>
@@ -291,7 +304,7 @@ export default function VaultList({ derivedKey, encryptionSalt, userPassword }: 
                 <textarea
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 bg-white dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:placeholder-gray-400 rounded focus:outline-none focus:ring-blue-500 focus:border-blue-500"
                   rows={3}
                   placeholder="Optional notes"
                 />

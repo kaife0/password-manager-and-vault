@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import cookie from 'cookie'
+import { serialize, parse } from 'cookie'
 import { verifyJWT, JWTPayload } from './jwt'
 
 const COOKIE_NAME = process.env.COOKIE_NAME || 'token'
@@ -11,7 +11,7 @@ export interface AuthenticatedRequest extends NextApiRequest {
 export function withAuth(handler: (req: AuthenticatedRequest, res: NextApiResponse) => Promise<void>) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const cookies = cookie.parse(req.headers.cookie || '')
+      const cookies = parse(req.headers.cookie || '')
       const token = cookies[COOKIE_NAME]
 
       if (!token) {
@@ -35,7 +35,7 @@ export function withAuth(handler: (req: AuthenticatedRequest, res: NextApiRespon
 }
 
 export function setTokenCookie(res: NextApiResponse, token: string) {
-  res.setHeader('Set-Cookie', cookie.serialize(COOKIE_NAME, token, {
+  res.setHeader('Set-Cookie', serialize(COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
@@ -45,7 +45,7 @@ export function setTokenCookie(res: NextApiResponse, token: string) {
 }
 
 export function clearTokenCookie(res: NextApiResponse) {
-  res.setHeader('Set-Cookie', cookie.serialize(COOKIE_NAME, '', {
+  res.setHeader('Set-Cookie', serialize(COOKIE_NAME, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',

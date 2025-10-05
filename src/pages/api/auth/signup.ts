@@ -43,6 +43,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(201).json({ message: 'User created successfully' })
   } catch (error) {
     console.error('Signup error:', error)
+    // More detailed error for debugging
+    if (error instanceof Error) {
+      console.error('Error details:', {
+        message: error.message,
+        stack: error.stack,
+        name: error.name
+      })
+    }
     res.status(500).json({ error: 'Internal server error' })
   }
 }
