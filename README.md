@@ -1,17 +1,30 @@
-# Privacy-First Password Manager
+# 🔐 Privacy-First Password Manager & Vault
 
-A minimal, fast, client-side encrypted password manager built with Next.js, TypeScript, and MongoDB. All encryption and decryption happens in your browser - the server only stores encrypted data.
+A minimal, fast, privacy-first password manager built with **Next.js 15**, **TypeScript**, and **MongoDB**. Features complete client-side encryption, responsive design, and modern UI with light/dark themes.
 
-## Features
+## ✨ Features
 
-- 🔒 **Client-side encryption** - All encryption/decryption happens in your browser using Web Crypto API
-- 🔑 **Strong crypto** - PBKDF2 (200,000 iterations) + AES-GCM for encryption
-- 🚀 **Fast & minimal** - Built with Next.js and Tailwind CSS
-- 📱 **Responsive design** - Works on desktop and mobile
-- 🎲 **Secure password generator** - Cryptographically secure random generation
-- 📋 **Auto-clearing clipboard** - Passwords auto-clear from clipboard after 15 seconds
-- 🔍 **Real-time search** - Search your vault instantly (on decrypted data)
-- 💾 **Zero-knowledge** - Server never sees your plaintext passwords
+### 🔒 Security & Privacy
+- **Client-side encryption** - All encryption/decryption happens in your browser using Web Crypto API
+- **Zero-knowledge architecture** - Server never sees your plaintext passwords or data
+- **Strong cryptography** - PBKDF2 (200,000 iterations) + AES-GCM for military-grade encryption
+- **Secure session management** - JWT tokens with httpOnly cookies
+- **Auto-clearing clipboard** - Passwords automatically clear from clipboard after 15 seconds
+
+### � User Experience
+- **Responsive design** - Perfect for phones, tablets, and laptops
+- **Light/Dark themes** - Theme toggle available on all pages (including login/signup)
+- **Manual vault unlock** - Login first, generate passwords, then unlock vault when needed
+- **Real-time search** - Search your vault instantly (searches decrypted data client-side)
+- **Modern UI** - Clean interface with Lucide React icons and Tailwind CSS
+
+### 🔧 Technical Features
+- **Secure password generator** - Cryptographically secure random generation with customizable options
+- **Vault management** - Add, edit, delete, and organize password entries
+- **Copy protection** - One-click password copying with automatic clipboard clearing
+- **Form paste support** - Paste passwords directly into vault forms
+- **Mobile optimization** - Touch-friendly interface with responsive tables
+- **Performance optimized** - Fast loading and smooth interactions
 
 ## How to Run Locally
 
@@ -48,120 +61,183 @@ A minimal, fast, client-side encrypted password manager built with Next.js, Type
    ```
 
 3. **Start the development server:**
+
    ```bash
    npm run dev
    ```
 
 4. **Open your browser:**
-   
-   Navigate to [http://localhost:3000](http://localhost:3000)
 
-## Cryptography
+   Navigate to `http://localhost:3000`
 
-This application uses industry-standard cryptography for maximum security:
+## 🏗️ Tech Stack
 
-- **Key Derivation:** PBKDF2 with SHA-256, 200,000 iterations
-- **Encryption:** AES-GCM with 256-bit keys and 96-bit random IVs  
-- **Salt:** 16 random bytes per user, stored server-side but used client-side
+### Frontend
+- **Next.js 15** - React framework with Pages Router
+- **TypeScript** - Type-safe JavaScript
+- **Tailwind CSS 3** - Utility-first CSS framework
+- **Lucide React** - Modern icon library
+- **Responsive Design** - Mobile-first approach
 
-The combination provides strong protection against brute-force attacks while ensuring data remains encrypted even if the server is compromised.
+### Backend
+- **Next.js API Routes** - Serverless functions
+- **MongoDB** - NoSQL database (Atlas cloud or local)
+- **Mongoose** - MongoDB object modeling
+- **JWT** - JSON Web Tokens for authentication
+- **bcryptjs** - Password hashing
 
-## Security Verification
+### Security
+- **Web Crypto API** - Browser-native cryptography
+- **PBKDF2** - Key derivation (200,000 iterations)
+- **AES-GCM** - Authenticated encryption
+- **httpOnly Cookies** - Secure session management
 
-### Database Verification
+## 🔐 Security Architecture
 
-Connect to your MongoDB and verify encrypted storage:
+### Encryption Flow
+1. **User Registration**: Password hashed with bcrypt, encryption salt generated
+2. **Login**: Derive encryption key from password + salt (client-side only)
+3. **Data Storage**: Vault items encrypted with AES-GCM before sending to server
+4. **Data Retrieval**: Encrypted data decrypted client-side using derived key
 
-```bash
-# Connect to your MongoDB
-mongo mongodb://localhost:27017/password-manager
+### Key Security Features
+- **Zero-knowledge**: Server never sees plaintext passwords or vault data
+- **Client-side encryption**: All crypto operations happen in browser
+- **Salt per user**: Unique encryption salt for each user account
+- **Secure sessions**: JWT tokens in httpOnly cookies
+- **Auto-logout**: Sessions expire after 7 days
+- **Clipboard security**: Auto-clear clipboard after 15 seconds
 
-# Check that passwords are encrypted
-db.vaultitems.find().pretty()
-```
+## 📱 User Interface
 
-You should see only `ciphertext` and `iv` fields - no plaintext passwords.
+### Theme System
+- **Dark mode default**: Professional dark theme as default
+- **Light/Dark toggle**: Available on all pages including login/signup
+- **Persistent choice**: Theme preference saved in localStorage
+- **System integration**: Respects system color scheme preferences
 
-### Network Verification  
+### Responsive Design
+- **Mobile (320px+)**: Compact layout, stacked elements, touch-friendly
+- **Tablet (640px+)**: Optimized spacing, selective column visibility
+- **Laptop (1024px+)**: Full layout with all features visible
+- **Desktop (1280px+)**: Spacious design with optimal user experience
 
-1. Open browser Developer Tools → Network tab
-2. Perform actions (add/edit passwords)
-3. Verify that requests to `/api/items` contain only encrypted `ciphertext` and `iv` fields
-4. Confirm no plaintext passwords are transmitted
+### User Experience
+- **Manual vault unlock**: Login → Generate passwords → Manually unlock vault
+- **Form paste support**: Paste passwords directly into vault item forms
+- **Real-time search**: Instant filtering of vault items
+- **Visual feedback**: Loading states, hover effects, smooth transitions
 
-### Acceptance Checklist
+## 🚀 Deployment Guide
 
-- ✅ Signup creates user with `passwordHash` and `encryptionSalt` in database
-- ✅ Login sets httpOnly cookie and returns `encryptionSaltBase64`  
-- ✅ Adding items sends only `ciphertext` and `iv` to server
-- ✅ Database contains only encrypted data (no plaintext)
-- ✅ Network traffic shows no plaintext passwords
-- ✅ Clipboard auto-clears after 15 seconds
-- ✅ Search works on decrypted data client-side
-- ✅ Edit/Delete operations maintain encryption
-
-## Demo Script (60-90 seconds)
-
-Record a screen demo following these steps:
-
-1. **Signup** (10s)
-   - Navigate to signup page
-   - Create account with email/password
-   - Show success message
-
-2. **Login** (10s)  
-   - Login with credentials
-   - Show redirect to dashboard
-
-3. **Generate Password** (15s)
-   - Adjust length slider (e.g., 20 characters)
-   - Toggle character types (uppercase, symbols, etc.)
-   - Click "Generate Password"
-   - Click "Copy" and show countdown timer
-
-4. **Add Vault Item** (20s)
-   - Click "Add Item"
-   - Fill form: Title="Gmail", Username="user@example.com", paste generated password
-   - Add URL="https://gmail.com"
-   - Click "Save"
-
-5. **Search & Edit** (15s)
-   - Type "Gmail" in search box
-   - Show filtered results  
-   - Click "Edit" on the item
-   - Modify the title to "Gmail Account"
-   - Save changes
-
-6. **Verify Security** (15s)
-   - Open browser Developer Tools → Network tab
-   - Edit an item again
-   - Show network request contains only encrypted data
-   - Open Application tab → Cookies, show httpOnly token
-
-7. **Delete** (5s)
-   - Click "Delete" on an item
-   - Confirm deletion
-
-## Deployment
-
-### Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import project in [Vercel Dashboard](https://vercel.com/dashboard)
-3. Add environment variables in Vercel project settings
-4. Deploy
+### Vercel (Recommended for Next.js)
+1. **Push to GitHub**: Commit your code to a GitHub repository
+2. **Import to Vercel**: Connect your GitHub repo at [vercel.com](https://vercel.com)
+3. **Configure Environment Variables**: Add production environment variables
+4. **Deploy**: Vercel automatically builds and deploys your app
 
 ### Environment Variables for Production
-
-Make sure to set these in your deployment platform:
+Add these in your deployment platform (Vercel/Netlify):
 
 ```bash
-MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/password-manager
-JWT_SECRET=<generate-strong-32-char-secret>
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
+JWT_SECRET=your_strong_jwt_secret_here
 JWT_EXPIRES_IN=7d
 NEXT_PUBLIC_API_BASE=/api
 COOKIE_NAME=token
+NODE_ENV=production
 ```
+
+### MongoDB Setup
+- **Local Development**: Use local MongoDB or MongoDB Atlas free tier
+- **Production**: Recommended to use MongoDB Atlas cloud database
+- **Same Database**: Your deployed app can use the same database as local development
+- **Data Persistence**: All existing vault items and user accounts work immediately
+
+### Deployment Verification
+After deployment, test:
+- ✅ User registration and login
+- ✅ Password generation with all options
+- ✅ Vault unlock and data access
+- ✅ Add, edit, delete vault items
+- ✅ Theme toggle functionality
+- ✅ Responsive design on mobile/tablet
+- ✅ Data encryption (check network tab)
+
+## 🧪 Testing & Verification
+
+### Security Verification
+1. **Database Check**: Connect to MongoDB and verify only encrypted `ciphertext` and `iv` are stored
+2. **Network Analysis**: Use browser DevTools to confirm no plaintext data in API calls
+3. **Encryption Test**: Add a vault item, check database shows encrypted data only
+4. **Session Security**: Verify JWT tokens are httpOnly and secure
+
+### Browser Compatibility
+- ✅ Chrome/Chromium 80+
+- ✅ Firefox 75+
+- ✅ Safari 13+
+- ✅ Edge 80+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
+
+## 📋 Usage Guide
+
+### Getting Started
+1. **Sign Up**: Create account with email and strong master password
+2. **Login**: Access dashboard with password generator
+3. **Generate Passwords**: Use customizable password generator
+4. **Unlock Vault**: Click "Unlock Vault" when needed
+5. **Add Items**: Store website credentials securely
+
+### Best Practices
+- **Master Password**: Use a strong, unique master password
+- **Generated Passwords**: Use the built-in generator for maximum security
+- **Regular Updates**: Update stored passwords periodically
+- **Backup**: Export vault data or maintain backup of MongoDB
+
+## 🤝 Contributing
+
+### Project Structure
+```
+src/
+├── components/          # React components
+│   ├── AuthForm.tsx     # Login/signup form
+│   ├── VaultList.tsx    # Vault items display
+│   ├── VaultItemRow.tsx # Individual vault item
+│   └── PasswordGenerator.tsx # Password generation
+├── pages/               # Next.js pages
+│   ├── api/            # API routes
+│   ├── auth/           # Authentication pages
+│   └── dashboard/      # Main dashboard
+├── contexts/           # React contexts
+├── hooks/              # Custom React hooks
+├── lib/                # Utility libraries
+├── models/             # Database models
+├── styles/             # CSS styles
+└── utils/              # Helper functions
+```
+
+### Development Setup
+1. Fork the repository
+2. Create feature branch: `git checkout -b feature/new-feature`
+3. Install dependencies: `npm install`
+4. Start development server: `npm run dev`
+5. Make changes and test thoroughly
+6. Submit pull request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 🔗 Links
+
+- **Live Demo**: [Your deployed URL]
+- **GitHub Repository**: [Your repo URL]
+- **Issues**: [Your repo issues URL]
+- **Documentation**: See `DEPLOYMENT.md` for detailed deployment guide
+
+---
+
+**Built with ❤️ using Next.js, TypeScript, and client-side encryption for maximum privacy and security.**
 
 ## Security Notes
 
